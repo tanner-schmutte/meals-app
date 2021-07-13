@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 
 const fetchFonts = () => {
-    Font.loadAsync({
+    return Font.loadAsync({
         'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
         'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
     });
@@ -18,6 +18,7 @@ export default function App() {
             <AppLoading
                 startAsync={fetchFonts}
                 onFinish={() => setFontLoaded(true)}
+                onError={(err) => console.log(err)}
             />
         );
     }
