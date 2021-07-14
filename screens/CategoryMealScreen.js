@@ -13,7 +13,11 @@ const CategoryMealScreen = (props) => {
                 duration={itemData.item.duration}
                 complexity={itemData.item.complexity}
                 affordability={itemData.item.affordability}
-                onSelectMeal={() => {}}
+                onSelectMeal={() => {
+                    props.navigation.navigate('MealDetail', {
+                        mealId: itemData.item.id,
+                    });
+                }}
             />
         );
     };
@@ -33,12 +37,6 @@ const CategoryMealScreen = (props) => {
                 }}
                 renderItem={renderMealItem}
                 style={{ width: '100%' }}
-            />
-            <Button
-                title="Go to Details"
-                onPress={() => {
-                    props.navigation.navigate('MealDetail');
-                }}
             />
         </View>
     );
