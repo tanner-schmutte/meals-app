@@ -31,7 +31,35 @@ const FiltersScreen = (props) => {
 
     const dispatch = useDispatch();
 
-    const saveFilters = useCallback(() => {
+    const saveGlutenState = useCallback(
+        (newValue) => {
+            setIsGlutenFree(newValue);
+        },
+        [isGlutenFree, dispatch]
+    );
+
+    const saveLactoseState = useCallback(
+        (newValue) => {
+            setIsLactoseFree(newValue);
+        },
+        [isLactoseFree, dispatch]
+    );
+
+    const saveVegetarianState = useCallback(
+        (newValue) => {
+            setIsVegetarian(newValue);
+        },
+        [isVegetarian, dispatch]
+    );
+
+    const saveVeganState = useCallback(
+        (newValue) => {
+            setIsVegan(newValue);
+        },
+        [isVegan, dispatch]
+    );
+
+    useEffect(() => {
         const appliedFilters = {
             glutenFree: isGlutenFree,
             lactoseFree: isLactoseFree,
@@ -40,11 +68,7 @@ const FiltersScreen = (props) => {
         };
 
         dispatch(setFilters(appliedFilters));
-    }, [isGlutenFree, isLactoseFree, isVegetarian, isVegan]);
-
-    useEffect(() => {
-        navigation.setParams({ save: saveFilters });
-    }, [saveFilters]);
+    }, [isGlutenFree, isLactoseFree, isVegetarian, isVegan, dispatch]);
 
     return (
         <View style={styles.screen}>
@@ -52,22 +76,22 @@ const FiltersScreen = (props) => {
             <FilterSwitch
                 label="Gluten Free"
                 state={isGlutenFree}
-                onChange={(newValue) => setIsGlutenFree(newValue)}
+                onChange={saveGlutenState}
             />
             <FilterSwitch
                 label="Lactose Free"
                 state={isLactoseFree}
-                onChange={(newValue) => setIsLactoseFree(newValue)}
+                onChange={saveLactoseState}
             />
             <FilterSwitch
                 label="Vegetarian"
                 state={isVegetarian}
-                onChange={(newValue) => setIsVegetarian(newValue)}
+                onChange={saveVegetarianState}
             />
             <FilterSwitch
                 label="Vegan"
                 state={isVegan}
-                onChange={(newValue) => setIsVegan(newValue)}
+                onChange={saveVeganState}
             />
         </View>
     );
@@ -84,15 +108,6 @@ FiltersScreen.navigationOptions = (navData) => {
                     onPress={() => {
                         navData.navigation.toggleDrawer();
                     }}
-                />
-            </HeaderButtons>
-        ),
-        headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                <Item
-                    title="Save"
-                    iconName="ios-save"
-                    onPress={navData.navigation.getParam('save')}
                 />
             </HeaderButtons>
         ),
